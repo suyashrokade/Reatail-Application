@@ -15,16 +15,32 @@ db.init_app(app)
 from app.models.user import User
 from app.models.product import Product
 from app.models.order import Order, OrderItem
+from app.models.wishlist import Wishlist
+from app.models.review import Review
 
 # Import routes
 from app.routes.auth import auth_bp
-from app.routes.products import products_bp
+from app.routes.products import products_bp, SAMPLE_PRODUCTS
 from app.routes.orders import orders_bp
+from app.routes.wishlists import wishlists_bp
+from app.routes.reviews import reviews_bp
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(products_bp, url_prefix='/api/products')
 app.register_blueprint(orders_bp, url_prefix='/api/orders')
+app.register_blueprint(wishlists_bp, url_prefix='/api/wishlists')
+app.register_blueprint(reviews_bp, url_prefix='/api/reviews')
+
+
+def initialize_sample_products():
+    """Seed the database with sample products if none exist."""
+    if Product.query.count() == 0:
+        for product_data in SAMPLE_PRODUCTS:
+            product = Product(**product_data)
+            db.session.add(product)
+        db.session.commit()
+
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
@@ -33,4 +49,5 @@ def health_check():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        initialize_sample_products()
     app.run(debug=True, port=5000)
