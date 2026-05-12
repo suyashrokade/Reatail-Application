@@ -21,6 +21,11 @@ class Product(db.Model):
     order_items = db.relationship('OrderItem', backref='product', lazy=True, cascade='all, delete-orphan')
     
     def to_dict(self):
+        total_reviews = len(self.reviews)
+        average_rating = 0.0
+        if total_reviews:
+            average_rating = round(sum(review.rating for review in self.reviews) / total_reviews, 1)
+
         return {
             'id': self.id,
             'name': self.name,
@@ -29,5 +34,7 @@ class Product(db.Model):
             'price': self.price,
             'quantity': self.quantity,
             'image_url': self.image_url,
+            'average_rating': average_rating,
+            'total_reviews': total_reviews,
             'created_at': self.created_at.isoformat()
         }

@@ -3,7 +3,7 @@ import '../styles/ProductCard.css';
 
 const API_URL = 'http://localhost:5000/api';
 
-function ProductCard({ product, onAddToCart, user }) {
+function ProductCard({ product, onAddToCart, onViewDetails, user }) {
   const [inWishlist, setInWishlist] = useState(false);
   const [wishlistId, setWishlistId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -114,15 +114,36 @@ function ProductCard({ product, onAddToCart, user }) {
             <span className="stock">
               {product.quantity > 0 ? `${product.quantity} in stock` : 'Out of stock'}
             </span>
+            <span className="product-rating">
+              {product.total_reviews > 0 ? (
+                <>
+                  ⭐ {product.average_rating} • {product.total_reviews} reviews
+                </>
+              ) : (
+                'No reviews yet'
+              )}
+            </span>
           </div>
 
-          <button
-            className="add-to-cart-btn"
-            onClick={() => onAddToCart(product)}
-            disabled={product.quantity === 0}
-          >
-            {product.quantity > 0 ? 'Add to Cart' : 'Out of Stock'}
-          </button>
+          <div className="product-actions">
+            {onViewDetails && (
+              <button
+                type="button"
+                className="details-btn"
+                onClick={() => onViewDetails(product)}
+              >
+                View Details
+              </button>
+            )}
+
+            <button
+              className="add-to-cart-btn"
+              onClick={() => onAddToCart(product)}
+              disabled={product.quantity === 0}
+            >
+              {product.quantity > 0 ? 'Add to Cart' : 'Out of Stock'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
