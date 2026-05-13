@@ -57,13 +57,6 @@ def initialize_products():
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
-def seed_products_if_empty():
-    if Product.query.count() == 0:
-        for product_data in SAMPLE_PRODUCTS:
-            db.session.add(Product(**product_data))
-        db.session.commit()
-
-
 @products_bp.route('', methods=['GET'])
 def get_all_products():
     """Get all products or filter by category, search, or sort"""
@@ -72,9 +65,6 @@ def get_all_products():
         search = request.args.get('search', '').strip()
         sort_by = request.args.get('sort', 'name')  # name, price, quantity
         sort_order = request.args.get('order', 'asc')  # asc, desc
-
-        if Product.query.count() == 0 and not search and (not category or category == 'All'):
-            seed_products_if_empty()
 
         query = Product.query
 

@@ -22,6 +22,17 @@
   opacity: 0.9;
 }
 
+.success-message {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #a7f3d0;
+  text-align: center;
+  font-weight: 500;
+}
+
 .orders-list {
   display: flex;
   flex-direction: column;
@@ -71,6 +82,22 @@
   text-transform: uppercase;
 }
 
+.status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.payment-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  color: white;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
 .order-items {
   margin-bottom: 1.5rem;
 }
@@ -107,6 +134,18 @@
   border-top: 2px solid var(--border-color);
   font-size: 1.125rem;
   color: var(--primary-color);
+}
+
+.payment-info {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.payment-info p {
+  margin: 0.25rem 0;
 }
 
 .no-orders {

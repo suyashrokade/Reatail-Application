@@ -80,12 +80,15 @@ npm run dev
 - Add/remove products
 - Adjust quantities
 - View total price
-- Checkout button
-- Order confirmation
+- Secure checkout with payment processing
+- Multiple payment methods (Card, UPI, COD, Net Banking)
+- Order confirmation with payment details
 
 ### 📦 Order Management
 - View all user orders
 - See order status (pending, completed, cancelled)
+- Payment status tracking (pending, paid, failed, refunded)
+- Payment method and transaction ID display
 - Order details with items and prices
 - Order history tracking
 

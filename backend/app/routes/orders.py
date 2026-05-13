@@ -117,3 +117,58 @@ def update_order_status(order_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
+
+@orders_bp.route('/<int:order_id>/payment', methods=['POST'])
+def process_payment(order_id):
+    """Process payment for an order"""
+    try:
+        order = Order.query.get(order_id)
+        
+        if not order:
+            return jsonify({'error': 'Order not found'}), 404
+        
+        if order.payment_status == 'paid':
+            return jsonify({'error': 'Order already paid'}), 400
+        
+        data = request.get_json()
+        
+        if not data.get('payment_method'):
+            return jsonify({'error': 'Payment method required'}), 400
+        
+        payment_method = data['payment_method']
+        
+        # Simulate payment processing (in real app, integrate with payment gateway)
+        import random
+        import string
+        
+        # Generate mock payment ID
+        payment_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+        
+        # Simulate payment success (90% success rate for demo)
+        payment_success = random.random() > 0.1
+        
+        if payment_success:
+            order.payment_status = 'paid'
+            order.payment_method = payment_method
+            order.payment_id = payment_id
+            order.status = 'completed'
+            
+            db.session.commit()
+            
+            return jsonify({
+                'message': 'Payment processed successfully',
+                'payment_id': payment_id,
+                'order': order.to_dict()
+            }), 200
+        else:
+            order.payment_status = 'failed'
+            db.session.commit()
+            
+            return jsonify({
+                'error': 'Payment failed',
+                'payment_id': payment_id
+            }), 400
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500

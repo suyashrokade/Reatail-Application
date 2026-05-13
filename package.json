@@ -1,0 +1,12 @@
+{
+  "name": "retail-application",
+  "version": "1.0.0",
+  "description": "A complete Full Stack Retail Application built with React, Python Flask, and SQLite.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

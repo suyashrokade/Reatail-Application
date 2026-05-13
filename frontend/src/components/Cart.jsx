@@ -17,41 +17,18 @@ function Cart({ items, user, onRemove, onUpdateQuantity }) {
       return;
     }
 
-    try {
-      setLoading(true);
-      setError('');
+    // Navigate to payment page with order data
+    const orderData = {
+      user_id: user.id,
+      items: items.map(item => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        name: item.name,
+      })),
+    };
 
-      const orderData = {
-        user_id: user.id,
-        items: items.map(item => ({
-          product_id: item.id,
-          quantity: item.quantity,
-        })),
-      };
-
-      const response = await fetch(`${API_URL}/orders`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create order');
-      }
-
-      // Clear cart and show success
-      items.forEach(item => onRemove(item.id));
-      alert('Order placed successfully! Order ID: ' + data.order.id);
-      navigate('/orders');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    navigate('/payment', { state: { orderData } });
   };
 
   return (

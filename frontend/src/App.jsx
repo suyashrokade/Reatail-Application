@@ -5,6 +5,7 @@ import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import OrderPage from './pages/OrderPage';
 import WishlistPage from './pages/WishlistPage';
+import PaymentPage from './pages/PaymentPage';
 import Navbar from './components/Navbar';
 import './styles/App.css';
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/signup" element={<SignupPage onLogin={handleLogin} />} />
         <Route path="/home" element={isAuthenticated ? <HomePage user={user} /> : <Navigate to="/login" />} />
         <Route path="/orders" element={isAuthenticated ? <OrderPage user={user} /> : <Navigate to="/login" />} />
+        <Route path="/payment" element={isAuthenticated ? <PaymentPage user={user} /> : <Navigate to="/login" />} />
         <Route path="/wishlist" element={isAuthenticated ? <WishlistPage user={user} /> : <Navigate to="/login" />} />
         <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />} />
       </Routes>

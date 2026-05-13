@@ -12,6 +12,9 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     total_amount = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(50), default='pending')  # pending, completed, cancelled
+    payment_status = db.Column(db.String(50), default='pending')  # pending, paid, failed, refunded
+    payment_method = db.Column(db.String(50))  # card, upi, cod, etc.
+    payment_id = db.Column(db.String(100))  # transaction/reference ID
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
@@ -24,6 +27,9 @@ class Order(db.Model):
             'user_id': self.user_id,
             'total_amount': self.total_amount,
             'status': self.status,
+            'payment_status': self.payment_status,
+            'payment_method': self.payment_method,
+            'payment_id': self.payment_id,
             'items': [item.to_dict() for item in self.items],
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()

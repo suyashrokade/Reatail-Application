@@ -33,6 +33,22 @@ app.register_blueprint(wishlists_bp, url_prefix='/api/wishlists')
 app.register_blueprint(reviews_bp, url_prefix='/api/reviews')
 
 
+def cleanup_duplicate_products():
+    """Remove duplicate products based on name and category."""
+    duplicates = db.session.query(
+        Product.name,
+        Product.category,
+        db.func.count(Product.id).label('count')
+    ).group_by(Product.name, Product.category).having(db.func.count(Product.id) > 1).all()
+
+    for name, category, _ in duplicates:
+        products = Product.query.filter_by(name=name, category=category).order_by(Product.id).all()
+        for duplicate_product in products[1:]:
+            db.session.delete(duplicate_product)
+    if duplicates:
+        db.session.commit()
+
+
 def initialize_sample_products():
     """Seed the database with sample products if none exist."""
     if Product.query.count() == 0:
@@ -49,5 +65,8 @@ def health_check():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        cleanup_duplicate_products()
         initialize_sample_products()
     app.run(debug=True, port=5000)
+
+

@@ -9,6 +9,7 @@ A complete Full Stack Retail Application built with React, Python Flask, and SQL
 - **Product Catalog**: 20+ products across 3 categories (Oils, Dals, Other Items)
 - **Product Images**: High-quality product images from Unsplash
 - **Shopping Cart**: Add/remove items, update quantities, real-time total
+- **Payment Processing**: Secure checkout with multiple payment methods (Card, UPI, COD, Net Banking)
 - **Order Management**: Place orders, view order history with status tracking
 - **Wishlist**: Save favorite products for later
 - **Search & Filter**: Search products by name/description, filter by category
