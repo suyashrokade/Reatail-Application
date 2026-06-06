@@ -1,0 +1,25 @@
+replicaCount: 2
+
+container:
+  name: suyash-container1
+  image: suyashrokade78/retail:v1.0.0
+  containerPort: 80
+
+service:
+  name: suyash-service1
+  port: 80
+  targetPort: 80
+  type: Nodeport
+
+configMap:
+  name: suyash-config1
+  data:
+    APP_NAME: "retail-App"
+    APP_PORT: "80"
+
+secret:
+  name: suyash-secret1
+  type: Opaque
+  data:
+    DB_USER: YWRtaW4=
+    DB_PASSWORD: YXRoYXJ2YUA3ODIz
