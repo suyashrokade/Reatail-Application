@@ -9,7 +9,7 @@ service:
   name: suyash-service1
   port: 80
   targetPort: 80
-  type: Nodeport
+  type: NodePort
 
 configMap:
   name: suyash-config1
